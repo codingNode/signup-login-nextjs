@@ -1,7 +1,7 @@
 import {connectToDB} from '@utils/database';
 import bcrypt from 'bcrypt';
 import User from '@/models/user';
-
+import {transporter } from '@config/nodemailer'
 
 // export default async function handler(req, res) {
 //     // if (req.method === 'POST') {
@@ -43,6 +43,15 @@ export const POST=async(request)=>
         console.log("user created: ", user)
 
         await user.save()
+
+        const mailOptions = {
+            from: process.env.EMAIL,
+            to: user.email
+        }
+        await transporter.sendMail({...mailOptions,
+        subject: "Test EMAIL",
+        text: "this is a test string",
+    html: "<h1>This is a test email to let you know that you have signed in successfully</h1>"})
 
         return new Response(JSON.stringify(user), { status: 200 })
 

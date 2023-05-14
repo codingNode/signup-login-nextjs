@@ -3,8 +3,9 @@ import bcrypt from 'bcrypt';
 import User from '@/models/user';
 
 
-export const POST=async(request)=> 
 
+
+export const POST=async(request)=>
 {
    const req = await request.json() 
     
